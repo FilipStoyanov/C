@@ -1,90 +1,12 @@
-#include <iostream>
-#include <cstring>
-using namespace std;
-unsigned my_strlen(const char word[])
-{
-    unsigned len{0};
-    while (word[len] != '\0')
-    {
-        ++len;
-    }
-    return len;
-}
-
-int my_strcmp(const char lsh[], const char rsh[])
-{
-    unsigned i{0};
-    while (lsh[i] == rsh[i] && lsh[i] && rsh[i])
-    {
-        ++i;
-    }
-    return lsh[i] - rsh[i];
-}
-void my_strcpy(char dest[], const char source[])
-{
-    unsigned i{0};
-    while (source[i])
-    {
-        dest[i] = source[i];
-        ++i;
-    }
-    dest[i] = '\0';
-    std::cout << dest;
-}
-void my_strcat(char dest[], const char source[])
-{
-    unsigned i{my_strlen(dest)};
-    unsigned j{0};
-    while (source[j])
-    {
-        dest[i] = source[j];
-        ++i;
-        ++j;
-    }
-    dest[i] = '\0';
-}
-int my_strchr(const char str[], char symbol)
-{
-    unsigned i{0};
-    while (str[i])
-    {
-        if (str[i] == symbol)
-        {
-            return i;
-        }
-        ++i;
-    }
-    return -1;
-}
-
+#include<iostream>
+#include<cstring>
 bool is_digit(char c)
 {
     return c >= '0' && c <= '9';
 }
-int my_atoi(char str[])
-{
-    unsigned i{0};
-    unsigned number;
-    unsigned count_digits{0};
-    int digit;
-    unsigned result{0};
-    bool is_negative{false};
-    if (str[i] == '-')
-    {
-        ++i;
-        is_negative = true;
-    }
-    while (str[i] && is_digit(str[i]))
-    {
-        digit = {str[i] - '0'};
-        result = result * 10 + digit;
-        ++i;
-    }
-    return is_negative ? -result : result;
-}
 void run_length_encode(char destination[], char source[])
 {
-    unsigned size1 = my_strlen(source);
+    unsigned size1 = strlen(source);
     unsigned counter{1};
     unsigned j{0};
     for (unsigned input{0}; input < size1 - 1; ++input)
@@ -204,8 +126,15 @@ int main()
     char str1[101];
     std::cin.getline(str1, 100);
     char str2[101];
-    std::cin.getline(str2, 101);
-    char str3[101];
+    // std::cin.getline(str2, 100);
+    // std::cout<<my_strstr(str2,str1);
+    run_length_decode(str2,str1);
+    reverse_words(str1);
+
+    
+    
+
+ 
     
 
     return 0;
