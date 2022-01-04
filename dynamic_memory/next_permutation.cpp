@@ -3,101 +3,46 @@
 using namespace std;
 void reverse(int *begin, int *end)
 {
-    while(begin != end && begin != --end)
+    while (begin != end && begin != --end)
     {
-        std::iter_swap(first,last);
+        std::swap(*begin, *end);
         ++begin;
     }
 }
-void print(const int *begin, const int *end)
+bool next_permutation(int *&begin, int *&end)
 {
-    for (const int *it{begin}; it != end; ++it)
+    if (begin == end)
     {
-        std::cout << *it << " ";
-    }
-    std::cout << std::endl;
-}
-// bool next_permutation(int *begin, int *end)
-// {
-//     bool is_decreasing_sorted{false};
-//     int *highest_smaller;
-//     int *highest_bigger;
-//     while (!is_decreasing_sorted)
-//     {
-//         highest_smaller = nullptr;
-//         highest_bigger = nullptr;
-//         const int *before_end = end;
-//         --before_end;
-//         for (int *it{begin}; it != before_end; ++it)
-//         {
-//             if (*it < *(it + 1))
-//             {
-//                 highest_smaller = it;
-//             }
-//         }
-//         if (highest_smaller)
-//         {
-//             for (int *it{highest_smaller}; it != end; ++it)
-//             {
-//                 if (*it > *highest_smaller)
-//                 {
-//                     highest_bigger = it;
-//                 }
-//             }
-//         }
-//         std::cout << "smaller " << *highest_smaller << std::endl;
-//         std::cout << "bigger " << *highest_bigger << std::endl;
-//         if (highest_smaller && highest_bigger)
-//         {
-//             std::swap(*highest_smaller, *highest_bigger);
-//             int *copy_bigger{highest_bigger};
-//             int *copy_smaller{highest_smaller};
-//             std::cout << "copy_smaller " << *highest_smaller << std::endl;
-//             std::cout << "copy_bigger " << *highest_bigger << std::endl;
-//             reverse(copy_smaller, copy_bigger);
-//             print(begin, end);
-//             is_decreasing_sorted = false;
-//         }
-//         else
-//         {
-//             is_decreasing_sorted = true;
-//         }
-//     }
-//     if (is_decreasing_sorted)
-//     {
-//         reverse(begin, end);
-//         print(begin, end);
-//         return false;
-//     }
-//     return true;
-// }
-bool next_permutation(int *begin, int *end)
-{
-    if (begin == end){
         return false;
     }
-    int *it_begin{begin};
-    ++it_begin;
-    if (it_begin == end){
+    int *iter_begin = begin;
+    ++iter_begin;
+    if (iter_begin == end)
+    {
         return false;
     }
-    it_begin = end;
-    --it_begin;
+
+    iter_begin = end;
+    --iter_begin;
+
     while (true)
     {
-        int *it_end{it_begin};
-        --it_begin;
-        if (*it_begin < *it_end)
+        int *iter_end = iter_begin;
+        --iter_begin;
+
+        if (*iter_begin < *iter_end)
         {
-            int *copy_end{it_end};
-            while (!(*it_begin < *--copy_end))
+            int *copy_end = end;
+
+            while (!(*iter_begin < *--copy_end))
             {
-                std::swap(it_begin, copy_end);
-                reverse(it_end, end);
+                std::swap(*iter_begin, *copy_end);
+                reverse(iter_end, end);
                 return true;
             }
         }
-        if (it_begin == begin)
+
+        if (iter_begin == begin)
         {
             reverse(begin, end);
             return false;
