@@ -2,14 +2,21 @@
 #include <cstring>
 #include <cmath>
 using namespace std;
-char **allocate_char_matrix(unsigned height, unsigned width)
+void allocate_char_matrix(char **&table, unsigned height, unsigned width)
 {
-    char **table = new char *[height + 1];
+    table = new char *[height + 1];
     for (unsigned i{0}; i < height + 1; ++i)
     {
         table[i] = new char[width + 1];
     }
-    return table;
+}
+void deallocate_char_matrix(char **&table, unsigned height)
+{
+    for (unsigned i{0}; i < height; ++i)
+    {
+        delete[] table[i];
+    }
+    delete[] table;
 }
 bool is_letter(char c)
 {
@@ -36,7 +43,7 @@ bool is_arithmetic_operation(char c)
     }
     return true;
 }
-int begin_word(char *word, char *sentence)
+int begin_word(char *&word, char *&sentence)
 {
     unsigned length_word = strlen(word);
     unsigned length_sentence = strlen(sentence);
@@ -64,7 +71,7 @@ int begin_word(char *word, char *sentence)
     }
     return -1;
 }
-void replace_words(char *old_word, char *new_word, int pos, char *&sentence)
+void replace_words(char *&old_word, char *&new_word, int pos, char *&sentence)
 {
     int sentence_length = strlen(sentence);
     int length_old_word = strlen(old_word);
@@ -107,7 +114,8 @@ void autoCorrect(unsigned n, unsigned dictionary_length)
             std::cout << "Invalid input! Dictionary length should be less than 128! Try again!" << std::endl;
         }
     } while (dictionary_length > 128);
-    char **dictionary = allocate_char_matrix(dictionary_length, 100);
+    char **dictionary;
+    allocate_char_matrix(dictionary, dictionary_length, 100);
     for (unsigned i{0}; i <= dictionary_length; ++i)
     {
         std::cin.clear();
@@ -161,7 +169,7 @@ void autoCorrect(unsigned n, unsigned dictionary_length)
             edit_text[counter] = '"';
             ++counter;
         }
-       else if (text[i] != ' ' && !is_punctuation_mark(text[i]) && text[i] != ',' && !is_arithmetic_operation(text[i])  && count_quotation_mark % 2 == 0 && text[i + 1] == '"')
+        else if (text[i] != ' ' && !is_punctuation_mark(text[i]) && text[i] != ',' && !is_arithmetic_operation(text[i]) && count_quotation_mark % 2 == 0 && text[i + 1] == '"')
         {
             edit_text[counter] = ' ';
             ++counter;
@@ -175,8 +183,7 @@ void autoCorrect(unsigned n, unsigned dictionary_length)
             edit_text[counter] = text[i + 1];
             ++counter;
         }
-        else if ( (!is_punctuation_mark(text[i]) && text[i+1] == '"' && count_quotation_mark % 2 == 1)
-                  || (!is_punctuation_mark(text[i]) && (text[i+1] == '\n' || text[i+1] == '\0')))
+        else if ((!is_punctuation_mark(text[i]) && text[i + 1] == '"' && count_quotation_mark % 2 == 1) || (!is_punctuation_mark(text[i]) && (text[i + 1] == '\n' || text[i + 1] == '\0')))
         {
             edit_text[counter] = text[i];
             ++counter;
@@ -190,29 +197,18 @@ void autoCorrect(unsigned n, unsigned dictionary_length)
         }
     }
     edit_text[counter] = '\0';
-    std::cout<<edit_text<<std::endl;
+    std::cout << edit_text << std::endl;
     delete[] edit_text;
     delete[] line;
     delete[] old_word;
+    delete[] new_word;
     delete[] text;
-    delete[] dictionary;
+    deallocate_char_matrix(dictionary, dictionary_length);
 }
 int main()
 {
     unsigned text_length, dictionary_length;
     autoCorrect(text_length, dictionary_length);
-    // char *str1 = new char[100];
-    // std::cin >> str1;
-    // char *str2 = new char[100];
-    // std::cin >> str2;
-    // char *sentence = new char[100];
-    // std::cin.clear();
-    // std::cin.ignore();
-    // std::cin.getline(sentence, 100);
-    // replace_words(str1,str2,sentence);
-    // std::cout<<sentence;
-    // delete[] str1;
-    // delete[] str2;
-    // delete[] sentence;
     return 0;
+    //need to change symbol rules code
 }

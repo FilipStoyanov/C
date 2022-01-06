@@ -1,15 +1,14 @@
 #include <iostream>
 using namespace std;
-int **allocate_matrix(int height, int width)
+void allocate_matrix(int**& matrix, int height, int width)
 {
-    int **matrix = new int *[height];
-    for (int i{0}; i < width; ++i)
+    matrix = new int*[height];
+    for (int i{0}; i < height; ++i)
     {
         matrix[i] = new int[width];
     }
-    return matrix;
 }
-void enter_matrix(int **matrix, int height, int width)
+void enter_matrix(int**& matrix, int height, int width)
 {
     for (int i{0}; i < height; ++i)
     {
@@ -19,7 +18,7 @@ void enter_matrix(int **matrix, int height, int width)
         }
     }
 }
-void print_matrix(int **matrix, int height, int width)
+void print_matrix(int**& matrix, int height, int width)
 {
     for (int i{0}; i < height; ++i)
     {
@@ -30,7 +29,7 @@ void print_matrix(int **matrix, int height, int width)
         std::cout << std::endl;
     }
 }
-void deallocate_matrix(int **matrix, int height)
+void deallocate_matrix(int**& matrix, int height)
 {
     for (int i{0}; i < height; ++i)
     {
@@ -38,7 +37,7 @@ void deallocate_matrix(int **matrix, int height)
     }
     delete[] matrix;
 }
-void copy_matrix(int **matrix, int **source, int height, int width)
+void copy_matrix(int**& matrix, int**& source, int height, int width)
 {
     for (int i{0}; i < height; ++i)
     {
@@ -48,12 +47,12 @@ void copy_matrix(int **matrix, int **source, int height, int width)
         }
     }
 }
-void transformMatrix(int **A, int **B, int N1, int M1, int N2, int M2)
+void transformMatrix(int**& A, int**& B, int N1, int M1, int N2, int M2)
 {
     if (N2 < N1 || M2 < M1)
     {
-        int **A1;
-        A1 = allocate_matrix(N1, M1);
+        int** A1 = new int*[N1];
+        allocate_matrix(A1, N1, M1);
         copy_matrix(A1, A, N1, M1);
         deallocate_matrix(A, N1);
         if (N2 < N1)
@@ -64,11 +63,9 @@ void transformMatrix(int **A, int **B, int N1, int M1, int N2, int M2)
         {
             M1 = M2;
         }
-        //std::cout<<"A: "<<A<<std::endl;
-        A = allocate_matrix(N1, M1);
+        allocate_matrix(A, N1, M1);
         copy_matrix(A, A1, N1, M1);
         deallocate_matrix(A1, N1);
-        // std::cout<<"A1: "<<A1<<std::endl;
     }
     for (int i{0}; i < N1; ++i)
     {
@@ -88,8 +85,7 @@ void transformMatrix(int **A, int **B, int N1, int M1, int N2, int M2)
     deallocate_matrix(A, N1);
     deallocate_matrix(B, N2);
 }
-int main()
-{
+void task1_demo(){
     int N1, M1, N2, M2;
     std::cout << "N1:";
     std::cin >> N1;
@@ -99,16 +95,20 @@ int main()
     std::cin >> N2;
     std::cout << "M2:";
     std::cin >> M2;
-    int **A;
-    int **B;
-    A = allocate_matrix(N1, M1);
-    B = allocate_matrix(N2, M2);
+    int** A;
+    int** B;
     std::cout<< "A: " << std::endl;
+    allocate_matrix(A, N1, M1);
     enter_matrix(A, N1, M1);
     std::cout<< "B: " << std::endl;
+    allocate_matrix(B, N2, M2);
     enter_matrix(B, N2, M2);
     std::cout<<std::endl;
     transformMatrix(A, B, N1, M1, N2, M2);
-
+}
+int main()
+{
+    task1_demo();
+   
     return 0;
 }
