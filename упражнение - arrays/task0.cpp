@@ -171,9 +171,9 @@ void autoCorrect(unsigned n, unsigned dictionary_length)
         }
         else if (text[i] != ' ' && !is_punctuation_mark(text[i]) && text[i] != ',' && !is_arithmetic_operation(text[i]) && count_quotation_mark % 2 == 0 && text[i + 1] == '"')
         {
-            edit_text[counter] = ' ';
+            edit_text[counter] = text[i];
             ++counter;
-            edit_text[counter] = '"';
+            edit_text[counter] = ' ';
             ++counter;
         }
         else if (text[i] != ' ' && (text[i + 1] == '(' || is_arithmetic_operation(text[i + 1])))
@@ -210,5 +210,4 @@ int main()
     unsigned text_length, dictionary_length;
     autoCorrect(text_length, dictionary_length);
     return 0;
-    //need to change symbol rules code
 }
