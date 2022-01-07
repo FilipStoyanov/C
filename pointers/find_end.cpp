@@ -4,6 +4,7 @@ const int *find_end(const int *begin, const int *end, const int *s_begin, const 
 {
     int reps{0};
     const int *last_occurrence;
+    bool occurrence{false};
     while (begin != end)
     {
         const int *copy_arr{begin};
@@ -14,12 +15,13 @@ const int *find_end(const int *begin, const int *end, const int *s_begin, const 
             if (reps == s_end - s_begin)
             {
                 last_occurrence = begin;
+                occurrence = true;
             }
             ++copy_arr;
         }
         ++begin;
     }
-    if (last_occurrence)
+    if (occurrence)
     {
         return last_occurrence;
     }

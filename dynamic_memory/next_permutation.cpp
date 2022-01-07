@@ -1,7 +1,7 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-void reverse(int *begin, int *end)
+void reverse(int* begin, int* end)
 {
     while (begin != end && begin != --end)
     {
@@ -9,7 +9,7 @@ void reverse(int *begin, int *end)
         ++begin;
     }
 }
-bool next_permutation(int *&begin, int *&end)
+bool next_permutation(int*& begin, int*& end)
 {
     if (begin == end)
     {

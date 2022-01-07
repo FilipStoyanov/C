@@ -23,7 +23,7 @@ void print(const int *begin, const int *end)
 }
 int main()
 {
-    const int arr[]{1, 2, 3 };
+    const int arr[]{1, 2, 3};
     int backward_copy[3]{};
 
     copy_backward(std::begin(arr), std::end(arr), std::begin(backward_copy));

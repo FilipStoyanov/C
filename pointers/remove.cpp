@@ -2,13 +2,16 @@
 using namespace std;
 int *remove(int *begin, int *end, int element)
 {
+    int* copy_end{end};
+    --copy_end;
+    --end;
     while (begin != end)
     {
         if (*begin == element)
         {
-            for (int *it{begin}; it != end; ++it)
+            for (int *it{begin}; it != end ; ++it)
             {
-                *it = *(it + 1);
+                    *it = *(it + 1);
             }
             --end;
         }

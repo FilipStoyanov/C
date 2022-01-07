@@ -13,7 +13,7 @@ const int *find_first_of(const int *begin, const int *end, const int *s_begin, c
         }
         ++begin;
     }
-    return end;
+    return nullptr;
 }
 int main()
 {
@@ -21,7 +21,10 @@ int main()
     const int seq[]{2, 4};
 
     const int *found = find_first_of(std::begin(arr), std::end(arr), std::begin(seq), std::end(seq));
-    std::cout << *found; // -> 2
+    if (found)
+    {
+        std::cout << *found; // -> 2
+    }
 
     return 0;
 }
