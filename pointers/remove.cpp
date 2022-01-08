@@ -1,21 +1,21 @@
 #include <iostream>
 using namespace std;
-int *remove(int *begin, int *end, int element)
+int *remove(int* begin, int* end, int element)
 {
-    int* copy_end{end};
-    --copy_end;
-    --end;
-    while (begin != end)
+    bool flag{false};
+    long int length{end - begin};
+    int curr{0};
+    while (curr < length)
     {
-        if (*begin == element)
-        {
-            for (int *it{begin}; it != end ; ++it)
+          if(*(begin + curr) == element)
             {
-                    *it = *(it + 1);
+                for (int *it{begin+curr}; it != end; ++it)
+                {
+                        *it = *(it + 1);
+                }
+                --end;
             }
-            --end;
-        }
-        ++begin;
+        ++curr;
     }
     return end;
 }
